@@ -1,5 +1,4 @@
 import {Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit} from '@angular/core';
-import {VERSION} from '@angular/material';
 import {NavItem} from './nav-item';
 import {NavService} from './nav.service';
 
@@ -11,7 +10,6 @@ import {NavService} from './nav.service';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('appDrawer') appDrawer: ElementRef;
-  version = VERSION;
   navItems: NavItem[] = [
     {
       displayName: 'Home',
@@ -27,7 +25,27 @@ export class AppComponent implements AfterViewInit {
       displayName: 'Fetch data',
       iconName: 'data_usage',
       route: 'fetch-data'
-    }
+    },
+
+    {
+      displayName: 'Appointments',
+      iconName: 'date_range',
+      route: 'appointments',
+      children: [
+        {
+          displayName: 'List',
+          iconName: 'list',
+          route: 'appointments'
+        },
+        {
+          displayName: 'Add',
+          iconName: 'add',
+          route: 'appointments/create',
+        }
+      ]
+
+    },
+
   ];
 
   constructor(private navService: NavService) {

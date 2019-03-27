@@ -59,6 +59,8 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import { CreateAppointmentComponent } from './appointments/create-appointment/create-appointment.component';
+import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import {
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
+    CreateAppointmentComponent,
+    ListAppointmentsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

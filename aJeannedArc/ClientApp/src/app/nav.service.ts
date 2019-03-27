@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Event, NavigationEnd, Router} from '@angular/router';
+// tslint:disable-next-line: import-blacklist
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
