@@ -13,3 +13,11 @@ export class ListAppointmentsComponent implements OnInit {
   }
 
 }
+
+interface Appointment {
+  title: string,
+  dateFormatted: string;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
+}
