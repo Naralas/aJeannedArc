@@ -22,6 +22,9 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 
+import { CalendarModule, DateAdapter } from 'angular-calendar'; 
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -74,6 +77,7 @@ import { ListAppointmentsComponent } from './appointments/list-appointments/list
     ListAppointmentsComponent,
   ],
   imports: [
+
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     MatMenuModule,
@@ -81,6 +85,7 @@ import { ListAppointmentsComponent } from './appointments/list-appointments/list
     FormsModule,
     AppRoutingModule,
 
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     A11yModule,
     CdkStepperModule,
     CdkTableModule,

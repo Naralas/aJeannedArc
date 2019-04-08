@@ -1,3 +1,44 @@
 <div class="container">
-
+  <div class="btn-group">
+    <div
+      class="btn btn-primary"
+      mwlCalendarPreviousView
+      [view]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="closeOpenMonthViewDay()"
+    >
+      Previous
+    </div>
+    <div
+      class="btn btn-outline-secondary"
+      mwlCalendarToday
+      [(viewDate)]="viewDate"
+    >
+      Today
+    </div>
+    <div
+      class="btn btn-primary"
+      mwlCalendarNextView
+      [view]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="closeOpenMonthViewDay()"
+    >
+      Next
+    </div>
+  </div>
+  <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div>
+      <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+  </div>
 </div>
