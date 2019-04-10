@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import {
+  Component,
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef
@@ -23,7 +23,6 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -42,14 +41,17 @@ const colors: any = {
 @Component({
   selector: 'app-list-appointments',
   templateUrl: './list-appointments.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./list-appointments.component.scss']
 })
-export class ListAppointmentsComponent implements OnInit {
+export class ListAppointmentsComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
-  view: CalendarView = CalendarView.Month;
-  viewDate: Date = new Date();
 
-  constructor(private modal: NgbModal) {}
+  view: CalendarView = CalendarView.Month;
+
+  CalendarView = CalendarView;
+
+  viewDate: Date = new Date();
 
   modalData: {
     action: string;
@@ -72,6 +74,7 @@ export class ListAppointmentsComponent implements OnInit {
     }
   ];
 
+  refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
     {
@@ -115,6 +118,9 @@ export class ListAppointmentsComponent implements OnInit {
   ];
 
   activeDayIsOpen: boolean = true;
+
+  constructor(private modal: NgbModal) {}
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
@@ -127,11 +133,6 @@ export class ListAppointmentsComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
     }
-  }
-
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   eventTimesChanged({
@@ -150,6 +151,11 @@ export class ListAppointmentsComponent implements OnInit {
       return iEvent;
     });
     this.handleEvent('Dropped or resized', event);
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
@@ -180,10 +186,6 @@ export class ListAppointmentsComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-
-  ngOnInit() {
-  }
-
 }
 
 interface Appointment {
