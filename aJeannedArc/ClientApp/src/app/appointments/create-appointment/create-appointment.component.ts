@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl, FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from '../../api/api.service';
 import { ErrorStateMatcher } from '@angular/material';
+import { Appointment } from '../../models/appointment';
 
 @Component({
   selector: 'app-create-appointment',
@@ -33,7 +34,14 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   onSubmit() {
+    const newAppointment: Appointment = new Appointment();
+    newAppointment.id = -1;
+    newAppointment.title = this.createEventForm.value.title;
+    newAppointment.start = this.createEventForm.value.start;
+    newAppointment.end = this.createEventForm.value.end;
+    newAppointment.notes = this.createEventForm.value.notes;
 
+    this.apiService.createAppointment(newAppointment);
     //this.apiService.login(username, password);
   }
 
