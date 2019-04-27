@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -67,6 +67,8 @@ import {
 } from '@angular/material';
 import { CreateAppointmentComponent } from './appointments/create-appointment/create-appointment.component';
 import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -78,9 +80,11 @@ import { ListAppointmentsComponent } from './appointments/list-appointments/list
     FetchDataComponent,
     CreateAppointmentComponent,
     ListAppointmentsComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
-
+    ReactiveFormsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     MatMenuModule,
