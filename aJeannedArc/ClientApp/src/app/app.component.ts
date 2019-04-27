@@ -34,17 +34,6 @@ export class AppComponent implements AfterViewInit {
     },
 
     {
-      displayName: 'Counter',
-      iconName: 'local_pizza',
-      route: 'counter'
-    },
-    {
-      displayName: 'Fetch data',
-      iconName: 'data_usage',
-      route: 'fetch-data'
-    },
-
-    {
       displayName: 'Appointments',
       iconName: 'date_range',
       route: 'appointments',
@@ -79,17 +68,6 @@ export class AppComponent implements AfterViewInit {
     },
 
     {
-      displayName: 'Counter',
-      iconName: 'local_pizza',
-      route: 'counter'
-    },
-    {
-      displayName: 'Fetch data',
-      iconName: 'data_usage',
-      route: 'fetch-data'
-    },
-
-    {
       displayName: 'Appointments',
       iconName: 'date_range',
       route: 'appointments',
@@ -109,6 +87,8 @@ export class AppComponent implements AfterViewInit {
   ];
 
   constructor(private navService: NavService, private apiService: ApiService) {
+    // at some point we should only push the items from one or another
+    // but this is a pain because of the order we want (home then login / logout, etc.)
     if(!apiService.isLogged())
     {
       this.navItems = this.anonNavItems;
