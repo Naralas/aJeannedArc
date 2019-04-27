@@ -46,7 +46,6 @@ const colors: any = {
 })
 export class ListAppointmentsComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
-
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -188,10 +187,7 @@ export class ListAppointmentsComponent {
   }
 }
 
-interface Appointment {
-  title: string,
-  dateFormatted: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+
+
+
+
