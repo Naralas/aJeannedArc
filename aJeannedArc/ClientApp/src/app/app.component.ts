@@ -110,7 +110,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  // https://medium.com/@enriqueoriol/angular-service-component-communication-4933782af52c
+  // https://medium.com/@enriqueoriol/angular-service-component-communication-4933782af52
   ngOnInit() {
     this.userIDChanged = this.apiService.userIDChanged.subscribe(userID =>
       this.updateNavItems()
