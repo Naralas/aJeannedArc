@@ -116,7 +116,7 @@ export class ListAppointmentsComponent {
     }
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen = true;
 
   constructor(private modal: NgbModal) {}
 

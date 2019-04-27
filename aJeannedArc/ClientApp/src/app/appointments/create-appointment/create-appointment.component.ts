@@ -23,8 +23,8 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   checkDates(group: FormGroup) {
-    let start = new Date(group.controls.start.value);
-    let end = new Date(group.controls.end.value);
+    const start = new Date(group.controls.start.value);
+    const end = new Date(group.controls.end.value);
 
     return end > start ? null : { invalidDate: true }
   }

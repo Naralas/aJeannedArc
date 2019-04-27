@@ -12,10 +12,10 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private apiService : ApiService ) { 
+  constructor(private formBuilder: FormBuilder, private apiService : ApiService ) {
     this.loginForm = this.formBuilder.group({
-      username:['', Validators.required],
-      password:['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit()
   {
-    let username: string = this.loginForm.value.username;
-    let password: string = this.loginForm.value.password;
+    const username: string = this.loginForm.value.username;
+    const password: string = this.loginForm.value.password;
     this.apiService.login(username, password);
   }
 

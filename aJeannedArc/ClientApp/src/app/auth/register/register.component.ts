@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
   ]);
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.controls.password.value;
-    let confirmPass = group.controls.confirmPassword.value;
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
     return pass === confirmPass ? null : { notSame: true }
   }
 
@@ -40,9 +40,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    let username: string = this.registerForm.value.username;
-    let email: string = this.registerForm.value.email;
-    let password: string = this.registerForm.value.password;
+    const username: string = this.registerForm.value.username;
+    const email: string = this.registerForm.value.email;
+    const password: string = this.registerForm.value.password;
 
     this.apiService.register(email, username, password);
   }

@@ -1,32 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-import { AppComponent } from './app.component';
-import { NavService } from './nav.service';
-import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
-import { TopNavComponent } from './top-nav/top-nav.component';
+import { AppComponent } from "./app.component";
+import { NavService } from "./nav.service";
+import { MenuListItemComponent } from "./menu-list-item/menu-list-item.component";
+import { TopNavComponent } from "./top-nav/top-nav.component";
 
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from "./home/home.component";
+import { CounterComponent } from "./counter/counter.component";
+import { FetchDataComponent } from "./fetch-data/fetch-data.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AppRoutingModule } from "./app-routing.module";
 
-import {A11yModule} from '@angular/cdk/a11y';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {PortalModule} from '@angular/cdk/portal';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
+import { A11yModule } from "@angular/cdk/a11y";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { PortalModule } from "@angular/cdk/portal";
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { CdkStepperModule } from "@angular/cdk/stepper";
+import { CdkTableModule } from "@angular/cdk/table";
+import { CdkTreeModule } from "@angular/cdk/tree";
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarModule, DateAdapter } from 'angular-calendar';
-import {FlatpickrModule } from 'angularx-flatpickr'; 
-import {adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { CalendarModule, DateAdapter } from "angular-calendar";
+import { FlatpickrModule } from "angularx-flatpickr";
+import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
+
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { FakeBackendInterceptor } from "./helpers/fake-backend-interceptor";
 
 import {
   MatAutocompleteModule,
@@ -63,12 +66,13 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTreeModule,
-} from '@angular/material';
-import { CreateAppointmentComponent } from './appointments/create-appointment/create-appointment.component';
-import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
+  MatTreeModule
+} from "@angular/material";
+import { CreateAppointmentComponent } from "./appointments/create-appointment/create-appointment.component";
+import { ListAppointmentsComponent } from "./appointments/list-appointments/list-appointments.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { RegisterComponent } from "./auth/register/register.component";
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -82,10 +86,11 @@ import { RegisterComponent } from './auth/register/register.component';
     ListAppointmentsComponent,
     LoginComponent,
     RegisterComponent,
+    LogoutComponent
   ],
   imports: [
     ReactiveFormsModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     BrowserAnimationsModule,
     MatMenuModule,
     HttpClientModule,
@@ -95,7 +100,10 @@ import { RegisterComponent } from './auth/register/register.component';
     NgbModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     A11yModule,
     CdkStepperModule,
     CdkTableModule,
@@ -139,7 +147,14 @@ import { RegisterComponent } from './auth/register/register.component';
     PortalModule,
     ScrollingModule
   ],
-  providers: [NavService],
+  providers: [
+    NavService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FakeBackendInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

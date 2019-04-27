@@ -1,20 +1,32 @@
-import {Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit} from '@angular/core';
-import {NavItem} from './nav-item';
-import {NavService} from './nav.service';
-import {ApiService} from './api/api.service';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  ViewEncapsulation,
+  AfterViewInit,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
+import { NavItem } from './nav-item';
+import { NavService } from './nav.service';
+import { ApiService } from './api/api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  providers: [ApiService],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
+  private userIDChanged: Subscription = null;
+
   @ViewChild('appDrawer') appDrawer: ElementRef;
+
   navItems: NavItem[] = [];
 
-  anonNavItems : NavItem[] =
-  [
+  anonNavItems: NavItem[] = [
     {
       displayName: 'Home',
       iconName: 'home',
@@ -34,27 +46,25 @@ export class AppComponent implements AfterViewInit {
     },
 
     {
-      displayName: 'Events',
+      displayName: 'Appointments',
       iconName: 'date_range',
-      route: 'events',
+      route: 'appointments',
       children: [
         {
           displayName: 'List',
           iconName: 'list',
-          route: 'events'
+          route: 'appointments'
         },
         {
           displayName: 'Add',
           iconName: 'add',
-          route: 'events/create',
+          route: 'appointments/create'
         }
       ]
-
-    },
+    }
   ];
 
-  loggedNavItems : NavItem[] =
-  [
+  loggedNavItems: NavItem[] = [
     {
       displayName: 'Home',
       iconName: 'home',
@@ -64,7 +74,7 @@ export class AppComponent implements AfterViewInit {
     {
       displayName: 'Logout',
       iconName: 'subdirectory_arrow_right',
-      route: 'login'
+      route: 'logout'
     },
 
     {
@@ -80,23 +90,35 @@ export class AppComponent implements AfterViewInit {
         {
           displayName: 'Add',
           iconName: 'add',
-          route: 'appointments/create',
+          route: 'appointments/create'
         }
       ]
-    },
+    }
   ];
 
   constructor(private navService: NavService, private apiService: ApiService) {
     // at some point we should only push the items from one or another
     // but this is a pain because of the order we want (home then login / logout, etc.)
-    if(!apiService.isLogged())
-    {
+    this.updateNavItems();
+  }
+
+  private updateNavItems() {
+    if (!this.apiService.isLogged()) {
       this.navItems = this.anonNavItems;
-    }
-    else
-    {
+    } else {
       this.navItems = this.loggedNavItems;
     }
+  }
+
+  // https://medium.com/@enriqueoriol/angular-service-component-communication-4933782af52c
+  ngOnInit() {
+    this.userIDChanged = this.apiService.userIDChanged.subscribe(userID =>
+      this.updateNavItems()
+    );
+  }
+
+  ngOnDestroy() {
+    this.userIDChanged.unsubscribe();
   }
 
   ngAfterViewInit() {
