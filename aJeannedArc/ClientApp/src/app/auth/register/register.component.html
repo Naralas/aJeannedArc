@@ -1,14 +1,39 @@
 <div class="container">
-    <h1>Register</h1>
-    <form class="register-form">
-        <mat-form-field>
-          <input matInput placeholder="Email" [formControl]="emailFormControl">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
+  <h3>Register</h3>
+  <form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field class="full-width">
+        <input formControlName="username" matInput placeholder="Username">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Email" [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input matInput type="password" formControlName="password" placeholder="Password">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm your password"
+          [errorStateMatcher]="matcher">
+        <mat-error *ngIf="registerForm.hasError('notSame')">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button type="submit" [disabled]="!registerForm.valid" mat-raised-button color="primary">Register</button>
+    </p>
+
+  </form>
 </div>

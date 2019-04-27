@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
+
+import {ApiService} from '../../api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,23 @@ import {MatInputModule} from '@angular/material/input';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
-  // https://material.angular.io/components/input/examples
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  loginForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private apiService : ApiService ) { 
+    this.loginForm = this.formBuilder.group({
+      username:['', Validators.required],
+      password:['', Validators.required]
+    });
+  }
 
   ngOnInit() {
+  }
+
+  onSubmit()
+  {
+    let username: string = this.loginForm.value.username;
+    let password: string = this.loginForm.value.password;
+    this.apiService.login(username, password);
   }
 
 }
