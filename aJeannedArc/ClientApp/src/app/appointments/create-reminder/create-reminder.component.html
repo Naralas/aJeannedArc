@@ -1,0 +1,21 @@
+<div class="container">
+  <h3>Create reminder</h3>
+  <form [formGroup]="createReminderForm" class="create-event-form" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field class="full-width">
+        <input formControlName="title" matInput placeholder="Title">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input type="text" formControlName="dateTime" matInput mwlFlatpickr [enableTime]="true"
+          dateFormat="Y-m-d H:i   " [time24hr]="true" timeFormat="H:i" altFormat="F j, Y H:i" [altInput]="true"
+          placeholder="Date and Time" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <button type="submit" [disabled]="!createReminderForm.valid" mat-raised-button color="primary">Create</button>
+    </p>
+  </form>
+</div>

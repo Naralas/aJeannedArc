@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { Subject } from 'rxjs';
 import { Appointment } from '../models/appointment';
+import { Reminder } from '../models/reminder';
 
 const USER_ID = 'USER_ID';
 
@@ -65,6 +66,19 @@ export class ApiService {
   createAppointment(appointment: Appointment) {
     this.http.post<LoginResultModel>(this.apiUrl + 'api/appointments/create', {
       appointment: appointment,
+    }).subscribe(r => {
+      if (r.userId) {
+        this.setUserID(r.userId);
+        this.router.navigateByUrl('/events');
+      } else {
+        console.error(r.error);
+      }
+    });
+  }
+
+  createReminder(reminder: Reminder) {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/reminders/create', {
+      reminder: reminder,
     }).subscribe(r => {
       if (r.userId) {
         this.setUserID(r.userId);

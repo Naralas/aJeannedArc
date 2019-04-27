@@ -6,6 +6,7 @@ import {ListAppointmentsComponent} from './appointments/list-appointments/list-a
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { CreateReminderComponent } from './appointments/create-reminder/create-reminder.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'logout', component: LogoutComponent},
   { path: 'events', component: ListAppointmentsComponent},
-  { path: 'events/reminders/create', component: ListAppointmentsComponent},
+  { path: 'events/reminders/create', component: CreateReminderComponent},
   { path: 'events/appointments/create', component: CreateAppointmentComponent },
 ];
 

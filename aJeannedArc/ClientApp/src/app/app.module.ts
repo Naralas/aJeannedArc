@@ -73,6 +73,7 @@ import { ListAppointmentsComponent } from "./appointments/list-appointments/list
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { LogoutComponent } from './auth/logout/logout.component';
+import { CreateReminderComponent } from './appointments/create-reminder/create-reminder.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     ListAppointmentsComponent,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    CreateReminderComponent
   ],
   imports: [
     ReactiveFormsModule,
