@@ -35,7 +35,7 @@ namespace aJeannedArc.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetTodoItem(long id)
+        public async Task<ActionResult<User>> GetUser(long id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -45,6 +45,16 @@ namespace aJeannedArc.Controllers
             }
 
             return user;
+        }
+
+        // POST: api/User
+        [HttpPost("create")]
+        public async Task<ActionResult<User>> CreateUser(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
     }
 }
