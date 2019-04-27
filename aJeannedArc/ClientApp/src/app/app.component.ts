@@ -34,19 +34,19 @@ export class AppComponent implements AfterViewInit {
     },
 
     {
-      displayName: 'Appointments',
+      displayName: 'Events',
       iconName: 'date_range',
-      route: 'appointments',
+      route: 'events',
       children: [
         {
           displayName: 'List',
           iconName: 'list',
-          route: 'appointments'
+          route: 'events'
         },
         {
           displayName: 'Add',
           iconName: 'add',
-          route: 'appointments/create',
+          route: 'events/create',
         }
       ]
 
