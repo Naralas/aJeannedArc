@@ -16,9 +16,9 @@ export class ApiService {
     this.apiUrl = baseUrl;
   }
 
-  login(email: string, password: string): void{
+  login(username: string, password: string): void{
     this.http.post<LoginResultModel>(this.apiUrl + "api/login", {
-      email: email,
+      username: username,
       password: password
     }).subscribe(r => {
       if(r.userId)
@@ -30,8 +30,25 @@ export class ApiService {
       {
         console.error(r.error);
       }
+    });
+  }
 
-    })
+  register(email: string, username: string, password: string): void{
+    this.http.post<LoginResultModel>(this.apiUrl + "api/register", {
+      email: email,
+      username: username,
+      password: password
+    }).subscribe(r => {
+      if(r.userId)
+      {
+        this.setUserID(r.userId);
+        this.router.navigateByUrl('/appointments')
+      }
+      else
+      {
+        console.error(r.error);
+      }
+    });
   }
 
   setUserID(userID: string)
