@@ -12,8 +12,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'logout', component: LogoutComponent},
-  { path: 'appointments', component: ListAppointmentsComponent},
-  { path: 'appointments/create', component: CreateAppointmentComponent },
+  { path: 'events', component: ListAppointmentsComponent},
+  { path: 'events/reminders/create', component: ListAppointmentsComponent},
+  { path: 'events/appointments/create', component: CreateAppointmentComponent },
 ];
 
 @NgModule({

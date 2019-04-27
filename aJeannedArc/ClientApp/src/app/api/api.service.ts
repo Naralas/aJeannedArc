@@ -25,7 +25,7 @@ export class ApiService {
     }).subscribe(r => {
       if (r.userId) {
         this.setUserID(r.userId);
-        this.router.navigateByUrl('/appointments');
+        this.router.navigateByUrl('/events');
       } else {
         console.error(r.error);
       }
@@ -49,7 +49,7 @@ export class ApiService {
 
   logout() {
     localStorage.removeItem(USER_ID);
-    this.userChangeSource.next("");
+    this.userChangeSource.next('');
   }
 
   setUserID(userID: string) {

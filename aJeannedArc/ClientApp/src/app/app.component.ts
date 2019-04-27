@@ -24,15 +24,45 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild('appDrawer') appDrawer: ElementRef;
 
-  navItems: NavItem[] = [];
-
-  anonNavItems: NavItem[] = [
+  baseNavItems: NavItem[] = [
     {
       displayName: 'Home',
       iconName: 'home',
       route: ''
     },
 
+    {
+      displayName: 'Events',
+      iconName: 'date_range',
+      route: 'events',
+      children: [
+        {
+          displayName: 'List',
+          iconName: 'list',
+          route: 'events'
+        },
+        {
+          displayName: 'Add',
+          iconName: 'add',
+          route: 'events/create',
+          children: [
+            {
+              displayName: 'Appointment',
+              iconName: 'event',
+              route: 'events/appointments/create'
+            },
+            {
+              displayName: 'Reminder',
+              iconName: 'touch_app',
+              route: 'events/reminders/create'
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  anonNavItems: NavItem[] = [
     {
       displayName: 'Login',
       iconName: 'person',
@@ -44,57 +74,17 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       iconName: 'person_add',
       route: 'register'
     },
-
-    {
-      displayName: 'Appointments',
-      iconName: 'date_range',
-      route: 'appointments',
-      children: [
-        {
-          displayName: 'List',
-          iconName: 'list',
-          route: 'appointments'
-        },
-        {
-          displayName: 'Add',
-          iconName: 'add',
-          route: 'appointments/create'
-        }
-      ]
-    }
   ];
 
   loggedNavItems: NavItem[] = [
-    {
-      displayName: 'Home',
-      iconName: 'home',
-      route: ''
-    },
-
     {
       displayName: 'Logout',
       iconName: 'subdirectory_arrow_right',
       route: 'logout'
     },
-
-    {
-      displayName: 'Appointments',
-      iconName: 'date_range',
-      route: 'appointments',
-      children: [
-        {
-          displayName: 'List',
-          iconName: 'list',
-          route: 'appointments'
-        },
-        {
-          displayName: 'Add',
-          iconName: 'add',
-          route: 'appointments/create'
-        }
-      ]
-    }
   ];
+
+  navItems: NavItem[] = [];
 
   constructor(private navService: NavService, private apiService: ApiService) {
     // at some point we should only push the items from one or another
@@ -103,10 +93,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   private updateNavItems() {
-    if (!this.apiService.isLogged()) {
-      this.navItems = this.anonNavItems;
-    } else {
-      this.navItems = this.loggedNavItems;
+    this.navItems = Array.from(this.baseNavItems);
+    const copyItems: NavItem[] = !this.apiService.isLogged() ? this.anonNavItems : this.loggedNavItems;
+    for (const item of copyItems) {
+      this.navItems.splice(1, 0, item);
     }
   }
 
