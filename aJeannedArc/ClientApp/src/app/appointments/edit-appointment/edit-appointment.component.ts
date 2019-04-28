@@ -44,6 +44,7 @@ export class EditAppointmentComponent implements OnInit {
     editedAppointment.title = this.editAppointmentForm.value.title;
     editedAppointment.start = this.editAppointmentForm.value.start;
     editedAppointment.end = this.editAppointmentForm.value.end;
+    editedAppointment.notes = this.editAppointmentForm.value.notes;
 
     this.apiService.editAppointment (editedAppointment);
   }

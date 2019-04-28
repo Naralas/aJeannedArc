@@ -89,7 +89,7 @@
               dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
           </td>
           <td>
-            <button class="btn btn-danger">
+            <button class="btn btn-danger" (click)="deleteAppointment(appointment)">
               Delete
             </button>
           </td>
@@ -112,7 +112,7 @@
                 dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
             </td>
             <td>
-              <button class="btn btn-danger">
+              <button class="btn btn-danger" (click)="deleteReminder(reminder)">
                 Delete
               </button>
             </td>

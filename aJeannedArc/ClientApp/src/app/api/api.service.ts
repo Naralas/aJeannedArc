@@ -118,6 +118,13 @@ export class ApiService {
     });
   }
 
+  deleteAppointment(appointment: Appointment) {
+    this.http.delete<void>(this.apiUrl + 'api/appointment/delete/' + appointment.id, {
+    }).subscribe(r => {
+      this.router.navigateByUrl('/events');
+    });
+  }
+
   getUserReminders(): Observable<Reminder[]> {
     /*this.http.get<Reminder[]>(this.apiUrl + 'api/reminder', {
     }).subscribe(r => {
@@ -175,7 +182,16 @@ export class ApiService {
       }
     });
   }
+
+  deleteReminder(reminder: Reminder) {
+    this.http.delete<void>(this.apiUrl + 'api/reminder/delete/' + reminder.id, {
+    }).subscribe(r => {
+        this.router.navigateByUrl('/events');
+    });
+  }
 }
+
+
 
 export interface LoginResultModel {
   id: string;

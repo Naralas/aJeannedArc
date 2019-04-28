@@ -64,7 +64,6 @@ const eventColors: any = {
 export class ListAppointmentsComponent implements OnInit {
 
   constructor(private modal: NgbModal, private apiService: ApiService, private cdRef: ChangeDetectorRef) {
-    //this.reminders = this.apiService.getUserReminders();
   }
 
 
@@ -101,76 +100,18 @@ export class ListAppointmentsComponent implements OnInit {
   reminders: Reminder[] = [];
   appointments: Appointment[] = [];
 
-  events: CalendarEvent[] = [
-    /*{
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }*/
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen = true;
 
   ngOnInit(): void {
-    /*const reminder: Reminder = new Reminder();
-    reminder.date = new Date();
-    reminder.title = "Test reminder";
-    reminder.id = 12;
-
-    const appointment: Appointment = new Appointment();
-    appointment.start = new Date();
-    appointment.end = addDays(new Date(), 3);
-    appointment.title = "Test appointment";
-    appointment.id = 12;
-
-    //this.reminders.push(reminder);
-    this.appointments.push(appointment);*/
-
-
-    /*this.reminders = this.apiService.getUserReminders();
-    */
     this.populateReminders();
     this.populateAppointments();
   }
 
-  populateAppointments()
-  {
+  populateAppointments() {
     this.apiService.getUserAppointments().subscribe(response => {
-      for (const appointment of response)
-      {
+      for (const appointment of response) {
         this.events = [
           ...this.events,
         {
@@ -197,8 +138,7 @@ export class ListAppointmentsComponent implements OnInit {
 
   populateReminders() {
     this.apiService.getUserReminders().subscribe(response => {
-        for (const reminder of response)
-        {
+        for (const reminder of response) {
           this.events = [
             ...this.events,
           {
@@ -279,6 +219,16 @@ export class ListAppointmentsComponent implements OnInit {
         }
       }
     ];
+  }
+
+  deleteAppointment(appointment: Appointment)
+  {
+    this.apiService.deleteAppointment(appointment);
+  }
+
+  deleteReminder(reminder: Reminder)
+  {
+    this.apiService.deleteReminder(reminder);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
