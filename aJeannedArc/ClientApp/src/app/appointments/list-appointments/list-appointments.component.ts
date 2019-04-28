@@ -223,12 +223,22 @@ export class ListAppointmentsComponent implements OnInit {
 
   deleteAppointment(appointment: Appointment)
   {
+    this.appointments.splice(this.appointments.indexOf(appointment), 1);
+    this.events.splice(this.events.indexOf(
+      this.events.filter(event => event.id === appointment.id && event.color === eventColors.appointments)[0]), 1);
     this.apiService.deleteAppointment(appointment);
+    this.cdRef.detectChanges();
   }
 
   deleteReminder(reminder: Reminder)
   {
+    console.log(this.events.length);
+    this.reminders.splice(this.reminders.indexOf(reminder), 1);
+    this.events.splice(this.events.indexOf(
+      this.events.filter(event => event.id === reminder.id && event.color === eventColors.reminders)[0]), 1);
     this.apiService.deleteReminder(reminder);
+    this.cdRef.detectChanges();
+    console.log(this.events.length);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
