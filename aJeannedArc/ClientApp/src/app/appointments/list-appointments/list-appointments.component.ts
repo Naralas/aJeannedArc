@@ -225,6 +225,10 @@ export class ListAppointmentsComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
+    if(action === 'Clicked')
+    {
+     return;
+    }
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
