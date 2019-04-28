@@ -62,8 +62,7 @@ namespace aJeannedArc.Controllers
 
             if (appointmentBdd == null)
                 return NoContent();
-
-            appointmentBdd.Id = appointment.Id;
+            
             appointmentBdd.IsPublic = appointment.IsPublic;
             appointmentBdd.UserId = appointment.UserId;
             appointmentBdd.Title = appointment.Title;

@@ -11,5 +11,6 @@ namespace aJeannedArc.Models
         public String Title { get; set; }
         public DateTime Date { get; set; }
         public Boolean IsFinished { get; set; }
+        public int UserId { get; set; }
     }
 }

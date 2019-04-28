@@ -59,5 +59,38 @@ namespace aJeannedArc.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetReminder), new { id = reminder.Id }, reminder);
         }
+
+        // PUT: api/Reminder/update/5
+        [HttpPost("update/{id}")]
+        public ActionResult<Reminder> Put(int id, [FromBody]Reminder reminder)
+        {
+            var reminderBdd = _context.Reminders.First(app => app.Id == id);
+
+            if (reminderBdd == null)
+                return NoContent();
+            
+            reminderBdd.Title = reminder.Title;
+            reminderBdd.Date = reminder.Date;
+            reminderBdd.UserId = reminder.UserId;
+            reminderBdd.IsFinished = reminder.IsFinished;
+
+            _context.SaveChanges();
+
+            return reminder;
+        }
+
+        // Get for user : api/Reminder/ForUser/id
+        [HttpGet("ForUser/{userId}")]
+        public async Task<ActionResult<IEnumerable<Reminder>>> GetReminderForUser(long userId)
+        {
+            var reminders = _context.Reminders.Where(a => a.UserId == userId).ToList();
+
+            if (reminders == null)
+            {
+                return NotFound();
+            }
+
+            return reminders;
+        }
     }
 }
