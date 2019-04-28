@@ -50,10 +50,11 @@ namespace aJeannedArc.Controllers
             return reminder;
         }
 
-        // POST: api/Reminder
-        [HttpPost("create")]
+        // POST: api/Reminder/Create
+        [HttpPost("Create")]
         public async Task<ActionResult<Reminder>> CreateReminder(Reminder reminder)
         {
+            Debug.WriteLine(reminder);
             _context.Reminders.Add(reminder);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetReminder), new { id = reminder.Id }, reminder);

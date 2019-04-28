@@ -26,8 +26,8 @@ namespace aJeannedArc.Controllers
             }
         }
 
-        // GET: api/Appointment
-        [HttpGet("public")]
+        // GET: api/Appointment/Public
+        [HttpGet("Public")]
         public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
         {
             var appointment = appointmentContext.Appointments.Where(a => a.IsPublic).ToList();
@@ -54,23 +54,26 @@ namespace aJeannedArc.Controllers
             return appointment;
         }
 
-        //// PUT: api/Appointment/5
-        //[HttpPost("{id}/update")]
-        //public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
-        //{
-        //    var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
+        // PUT: api/Appointment/5
+        [HttpPost("{id}/update")]
+        public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
+        {
+            var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
 
-        //    if (appointmentBdd == null)
-        //        return NoContent();
+            if (appointmentBdd == null)
+                return NoContent();
 
-        //    TryUpdateModelAsync<Appointment>(appointmentBdd, "", a => a.T)
+            appointmentBdd.Title = appointment.Title;
+            appointmentBdd.Notes = appointment.Notes;
+            appointmentBdd.Start= appointment.Start;
+            appointmentBdd.End = appointment.End;
 
+            appointmentContext.SaveChanges();
 
-        //    return appointment;
-        //}
+            return appointment;
+        }
 
-        // POST: api/User
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
             appointmentContext.Appointments.Add(appointment);
