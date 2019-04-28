@@ -73,6 +73,7 @@ namespace aJeannedArc.Controllers
             reminderBdd.Date = reminder.Date;
             reminderBdd.UserId = reminder.UserId;
             reminderBdd.IsFinished = reminder.IsFinished;
+            reminder.Id = reminderBdd.Id;
 
             reminder.Id = reminderBdd.Id;
             // TODO pour les autres aussi ou check

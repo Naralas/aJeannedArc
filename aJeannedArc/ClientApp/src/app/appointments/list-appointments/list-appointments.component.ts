@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
-  OnInit
+  OnInit,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   startOfDay,
@@ -57,12 +58,13 @@ const eventColors: any = {
   selector: 'app-list-appointments',
   templateUrl: './list-appointments.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./list-appointments.component.scss']
+  styleUrls: ['./list-appointments.component.scss'],
+  providers:  [ ApiService ]
 })
 export class ListAppointmentsComponent implements OnInit {
 
-  constructor(private modal: NgbModal, private apiService: ApiService) {
-    //this.reminders = this.apiService.getAllReminders();
+  constructor(private modal: NgbModal, private apiService: ApiService, private cdRef: ChangeDetectorRef) {
+    //this.reminders = this.apiService.getUserReminders();
   }
 
 
@@ -143,7 +145,7 @@ export class ListAppointmentsComponent implements OnInit {
   activeDayIsOpen = true;
 
   ngOnInit(): void {
-    const reminder: Reminder = new Reminder();
+    /*const reminder: Reminder = new Reminder();
     reminder.date = new Date();
     reminder.title = "Test reminder";
     reminder.id = 12;
@@ -154,42 +156,72 @@ export class ListAppointmentsComponent implements OnInit {
     appointment.title = "Test appointment";
     appointment.id = 12;
 
-    this.reminders.push(reminder);
-    this.appointments.push(appointment);
+    //this.reminders.push(reminder);
+    this.appointments.push(appointment);*/
 
-    for (const reminder of this.reminders) {
-      this.events.push({
-        id: reminder.id,
-        start: reminder.date,
-        end: reminder.date,
-        title: reminder.title,
-        color: eventColors.reminder,
-        actions: this.actions,
-        allDay: true,
-        resizable: {
-          beforeStart: false,
-          afterEnd: false,
-        },
-        draggable: false,
-      })
+
+    /*this.reminders = this.apiService.getUserReminders();
+    */
+    this.populateReminders();
+    this.populateAppointments();
+  }
+
+  populateAppointments()
+  {
+    this.apiService.getUserAppointments().subscribe(response => {
+      for (const appointment of response)
+      {
+        this.events = [
+          ...this.events,
+        {
+          id: appointment.id,
+          start: new Date(appointment.start),
+          end: new Date(appointment.end),
+          title: appointment.title,
+          color: eventColors.appointment,
+          actions: this.actions,
+          allDay: true,
+          resizable: {
+            beforeStart: false,
+            afterEnd: false,
+          },
+          draggable: false,
+        }
+      ]
     }
 
-    for (const appointment of this.appointments) {
-      this.events.push({
-        id: appointment.id,
-        start: appointment.start,
-        end: appointment.end,
-        title: appointment.title,
-        color: eventColors.appointment,
-        actions: this.actions,
-        allDay: true,
-        resizable: {
-          beforeStart: false,
-          afterEnd: false,
-        },
-        draggable: false,
-      })
-    }
+    this.appointments = response;
+    this.cdRef.detectChanges(); // <== added
+    })
+  }
+
+  populateReminders() {
+    this.apiService.getUserReminders().subscribe(response => {
+        for (const reminder of response)
+        {
+          this.events = [
+            ...this.events,
+          {
+            id: reminder.id,
+            start: new Date(reminder.date),
+            end: new Date(reminder.date),
+            title: reminder.title,
+            color: eventColors.reminder,
+            actions: this.actions,
+            allDay: true,
+            resizable: {
+              beforeStart: false,
+              afterEnd: false,
+            },
+            draggable: false,
+          }
+        ]
+      }
+
+      this.reminders = response;
+      this.cdRef.detectChanges(); // <== added
+    });
+
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -225,8 +257,7 @@ export class ListAppointmentsComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    if(action === 'Clicked')
-    {
+    if(action === 'Clicked') {
      return;
     }
     this.modalData = { event, action };

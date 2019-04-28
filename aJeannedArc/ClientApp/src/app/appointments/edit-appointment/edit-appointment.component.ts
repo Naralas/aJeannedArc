@@ -35,7 +35,7 @@ export class EditAppointmentComponent implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.appointment = this.apiService.getAppointment(id);
+    this.apiService.getAppointment(id).subscribe(response => this.appointment = response);
   }
 
   onSubmit() {
@@ -46,7 +46,6 @@ export class EditAppointmentComponent implements OnInit {
     editedAppointment.end = this.editAppointmentForm.value.end;
 
     this.apiService.editAppointment (editedAppointment);
-    //this.apiService.login(username, password);
   }
 }
 

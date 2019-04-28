@@ -1,7 +1,7 @@
 import {Inject, Injectable, Output } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Appointment } from '../models/appointment';
 import { Reminder } from '../models/reminder';
 
@@ -64,7 +64,11 @@ export class ApiService {
     return localStorage.getItem(USER_ID) != null;
   }
 
-  getAppointment(id: number): Appointment {
+  getUserAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(this.apiUrl + 'api/appointment', {});
+  }
+
+  getAppointment(id: number): Observable<Appointment> {
     /*this.http.get<Appointment>(this.apiUrl + 'api/appointment/' + id, {
     }).subscribe(r => {
       if (r.id) {
@@ -73,12 +77,13 @@ export class ApiService {
         console.error('Not working');
       }
     });
-    return null;*/
+    return null;
     const appointment: Appointment = new Appointment();
     appointment.start = new Date();
     appointment.end = new Date();
     appointment.title = "Salut";
-    return appointment;
+    return appointment;*/
+    return this.http.get<Appointment>(this.apiUrl + 'api/appointment/' + id);
   }
 
   createAppointment(appointment: Appointment) {
@@ -88,8 +93,7 @@ export class ApiService {
       end: appointment.end,
       notes: appointment.notes
     }).subscribe(r => {
-      if (r.id) {
-        //this.setUserID(r.id);
+      if (r != null) {
         console.log(r.title);
         this.router.navigateByUrl('/events');
       } else {
@@ -99,11 +103,14 @@ export class ApiService {
   }
 
   editAppointment(appointment: Appointment) {
-    this.http.post<LoginResultModel>(this.apiUrl + 'api/appointment/' + appointment.id + '/edit', {
-      appointment: appointment,
+    this.http.post<Appointment>(this.apiUrl + 'api/appointment/update/' + appointment.id, {
+      title: appointment.title,
+      start: appointment.start,
+      end: appointment.end,
+      notes: appointment.notes
     }).subscribe(r => {
-      if (r.id) {
-        this.setUserID(r.id);
+      if (r != null) {
+        console.log(r.title);
         this.router.navigateByUrl('/events');
       } else {
         console.error('Not working');
@@ -111,7 +118,21 @@ export class ApiService {
     });
   }
 
-  getReminder(id: number): Reminder {
+  getUserReminders(): Observable<Reminder[]> {
+    /*this.http.get<Reminder[]>(this.apiUrl + 'api/reminder', {
+    }).subscribe(r => {
+      console.log(r);
+      if (r.length > 0) {
+        console.log("More than 0");
+        return r;
+      } else {
+        console.error('Not working');
+      }
+    });
+    return null;*/
+    return this.http.get<Reminder[]>(this.apiUrl + 'api/reminder', {});
+  }
+  getReminder(id: number): Observable<Reminder> {
     /*this.http.get<Reminder>(this.apiUrl + 'api/events/reminders/' + id, {
     }).subscribe(r => {
       if (r.id) {
@@ -121,18 +142,17 @@ export class ApiService {
       }
     });
     return null;*/
-    const reminder: Reminder = new Reminder();
-    reminder.date = new Date();
-    reminder.title = "Salut";
-    return reminder;
+    return this.http.get<Reminder>(this.apiUrl + 'api/reminder/' + id, {});
   }
 
   editReminder(reminder: Reminder) {
-    this.http.post<Reminder>(this.apiUrl + 'api/reminder/' + reminder.id + '/edit', {
+    console.log(reminder);
+    this.http.post<Reminder>(this.apiUrl + 'api/reminder/update/' + reminder.id, {
       title: reminder.title,
       date: reminder.date,
     }).subscribe(r => {
-      if (r.id) {
+      console.log(r);
+      if (r != null) {
         this.router.navigateByUrl('/events');
       } else {
         console.error('Not working');
@@ -147,7 +167,7 @@ export class ApiService {
       date: reminder.date,
     }).subscribe(r => {
       console.log(r);
-      if (r.id) {
+      if (r != null) {
         console.log(r.title);
         this.router.navigateByUrl('/events');
       } else {

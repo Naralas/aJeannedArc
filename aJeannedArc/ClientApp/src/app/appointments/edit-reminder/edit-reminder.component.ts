@@ -26,14 +26,14 @@ export class EditReminderComponent implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.reminder = this.apiService.getReminder(id);
+    this.apiService.getReminder(id).subscribe(response => this.reminder = response);
   }
 
   onSubmit() {
     const editedReminder: Reminder = new Reminder();
-    editedReminder.id = -1;
+    editedReminder.id = this.reminder.id;
     editedReminder.title = this.editReminderForm.value.title;
-    editedReminder.date = this.editReminderForm.value.start;
+    editedReminder.date = this.editReminderForm.value.date;
 
     this.apiService.editReminder(editedReminder);
     //this.apiService.login(username, password);
