@@ -21,14 +21,14 @@ namespace aJeannedArc.Controllers
             {
                 // Create a new TodoItem if collection is empty,
                 // which means you can't delete all TodoItems.
-                appointmentContext.Appointments.Add(new Appointment{ Title = "User1" });
+                appointmentContext.Appointments.Add(new Appointment{ Title = "User1", IsPublic = true });
                 appointmentContext.SaveChanges();
             }
         }
 
         // GET: api/Appointment
-        [HttpGet]
-        public  ActionResult<IEnumerable<Appointment>> GetPublicÄppointment()
+        [HttpGet("public")]
+        public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
         {
             var appointment = appointmentContext.Appointments.Where(a => a.IsPublic).ToList();
 
