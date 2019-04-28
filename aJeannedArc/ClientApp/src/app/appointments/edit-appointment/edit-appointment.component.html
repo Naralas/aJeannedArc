@@ -1,3 +1,32 @@
-<p>
-  edit-appointment works!
-</p>
+<div class="container">
+    <h3>Edit appointment</h3>
+    <form [formGroup]="editAppointmentForm" class="create-event-form" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field class="full-width">
+          <input formControlName="title" matInput placeholder="Title" [(ngModel)]="appointment.title">
+        </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field class="full-width">
+            <input type="text" id="startDateTime" formControlName="start" matInput mwlFlatpickr [enableTime]="true"
+              dateFormat="Y-m-d H:i   " [time24hr]="true" timeFormat="H:i" altFormat="F j, Y H:i" [altInput]="true"
+              placeholder="Start" />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input type="text" formControlName="end" matInput mwlFlatpickr [enableTime]="true" dateFormat="Y-m-d H:i"
+              [time24hr]="true" timeFormat="H:i" altFormat="F j, Y H:i" [altInput]="true" placeholder="End"
+              [errorStateMatcher]="matcher" />
+            <mat-error *ngIf="editAppointmentForm.hasError('invalidDate')">
+              End date must be after start date
+            </mat-error>
+          </mat-form-field>
+        </p>
+
+
+      <p>
+        <button type="submit" [disabled]="!editAppointmentForm.valid" mat-raised-button color="primary">Save</button>
+      </p>
+    </form>
+  </div>

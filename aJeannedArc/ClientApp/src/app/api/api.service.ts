@@ -64,6 +64,23 @@ export class ApiService {
     return localStorage.getItem(USER_ID) != null;
   }
 
+  getAppointment(id: number): Appointment {
+    /*this.http.get<Appointment>(this.apiUrl + 'api/events/appointments/' + id, {
+    }).subscribe(r => {
+      if (r.id) {
+        return r;
+      } else {
+        console.error('Not working');
+      }
+    });
+    return null;*/
+    const appointment: Appointment = new Appointment();
+    appointment.start = new Date();
+    appointment.end = new Date();
+    appointment.title = "Salut";
+    return appointment;
+  }
+
   createAppointment(appointment: Appointment) {
     this.http.post<LoginResultModel>(this.apiUrl + 'api/events/appointments/create', {
       appointment: appointment,
@@ -135,7 +152,5 @@ export class ApiService {
 
 export interface LoginResultModel {
   id: string;
-  username: string;
-  email: string;
-  // error: string;
+  error: string;
 }
