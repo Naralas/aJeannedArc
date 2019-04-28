@@ -23,6 +23,7 @@ namespace aJeannedArc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UserContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
+            services.AddDbContext<AppointmentContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
