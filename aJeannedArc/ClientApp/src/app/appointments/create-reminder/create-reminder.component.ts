@@ -18,7 +18,7 @@ export class CreateReminderComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private apiService: ApiService) {
     this.createReminderForm = this.formBuilder.group({
       title: ['', Validators.required],
-      dateTime: ['', Validators.required],
+      date: ['', Validators.required],
     }, );
   }
 
@@ -28,9 +28,8 @@ export class CreateReminderComponent implements OnInit {
 
   onSubmit() {
     const newReminder: Reminder = new Reminder();
-    newReminder.id = -1;
     newReminder.title = this.createReminderForm.value.title;
-    newReminder.dateTime = this.createReminderForm.value.start;
+    newReminder.date = this.createReminderForm.value.date;
 
     this.apiService.createReminder(newReminder);
     //this.apiService.login(username, password);

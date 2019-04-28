@@ -19,7 +19,7 @@ export class EditReminderComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private apiService: ApiService, private route: ActivatedRoute) {
     this.editReminderForm = this.formBuilder.group({
       title: ['', Validators.required],
-      dateTime: ['', Validators.required],
+      date: ['', Validators.required],
     }, );
   }
 
@@ -33,7 +33,7 @@ export class EditReminderComponent implements OnInit {
     const editedReminder: Reminder = new Reminder();
     editedReminder.id = -1;
     editedReminder.title = this.editReminderForm.value.title;
-    editedReminder.dateTime = this.editReminderForm.value.start;
+    editedReminder.date = this.editReminderForm.value.start;
 
     this.apiService.editReminder(editedReminder);
     //this.apiService.login(username, password);

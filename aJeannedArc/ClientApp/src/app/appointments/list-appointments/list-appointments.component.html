@@ -102,12 +102,12 @@
               <a [routerLink]="['/events/reminders/', reminder.id, 'edit']">{{reminder.title}}</a>
             </td>
             <td>
-              <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="reminder.dateTime"
+              <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="reminder.date"
                 (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
                 dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
             </td>
             <td>
-              <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="reminder.dateTime"
+              <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="reminder.date"
                 (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
                 dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
             </td>

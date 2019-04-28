@@ -144,7 +144,7 @@ export class ListAppointmentsComponent implements OnInit {
 
   ngOnInit(): void {
     const reminder: Reminder = new Reminder();
-    reminder.dateTime = new Date();
+    reminder.date = new Date();
     reminder.title = "Test reminder";
     reminder.id = 12;
 
@@ -160,8 +160,8 @@ export class ListAppointmentsComponent implements OnInit {
     for (const reminder of this.reminders) {
       this.events.push({
         id: reminder.id,
-        start: reminder.dateTime,
-        end: reminder.dateTime,
+        start: reminder.date,
+        end: reminder.date,
         title: reminder.title,
         color: eventColors.reminder,
         actions: this.actions,
