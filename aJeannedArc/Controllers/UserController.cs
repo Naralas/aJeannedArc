@@ -26,12 +26,7 @@ namespace aJeannedArc.Controllers
                 // which means you can't delete all TodoItems.
                 User a = new User
                 {
-                    Username = "User1",
-                    Appointments = new List<Appointment>
-                                    {
-                                        new Appointment{ Title = "a 1"},
-                                        new Appointment{ Title = "a 3"}
-                                    }
+                    Username = "User1"
                 };
                 _context.Users.Add(a);
 
@@ -47,6 +42,7 @@ namespace aJeannedArc.Controllers
         }
 
 
+        /*
         // GET: api/User
         [HttpGet("calendar/{id}")]
         public ActionResult<ICollection<Appointment>> GetCalendar(long id)
@@ -57,7 +53,7 @@ namespace aJeannedArc.Controllers
                 return NotFound();
 
             return new JsonResult(calendar);
-        }
+        }*/
 
         // GET: api/User/5
         [HttpGet("{id}")]

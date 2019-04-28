@@ -55,7 +55,7 @@ namespace aJeannedArc.Controllers
         }
 
         // PUT: api/Appointment/5
-        [HttpPost("{id}/update")]
+        [HttpPost("update/{id}")]
         public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
         {
             var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
@@ -82,8 +82,8 @@ namespace aJeannedArc.Controllers
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
         }
 
-        // Delete: api/Appointment/id
-        [HttpDelete("{id}")]
+        // Delete: api/Appointment/delete/id
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAppointment(long id)
         {
             var appointment = appointmentContext.Appointments.First(a => a.Id == id);
@@ -96,5 +96,7 @@ namespace aJeannedArc.Controllers
 
             return NoContent();
         }
+
+
     }
 }
