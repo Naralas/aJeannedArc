@@ -26,8 +26,8 @@ namespace aJeannedArc.Controllers
             }
         }
 
-        // GET: api/Appointment
-        [HttpGet("public")]
+        // GET: api/Appointment/Public
+        [HttpGet("Public")]
         public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
         {
             var appointment = appointmentContext.Appointments.Where(a => a.IsPublic).ToList();
@@ -69,8 +69,8 @@ namespace aJeannedArc.Controllers
         //    return appointment;
         //}
 
-        // POST: api/User
-        [HttpPost]
+        // POST: api/Appointment/Create
+        [HttpPost("Create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
             appointmentContext.Appointments.Add(appointment);
