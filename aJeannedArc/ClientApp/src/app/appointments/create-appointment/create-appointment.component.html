@@ -1,0 +1,36 @@
+<div class="container">
+  <h3>Create appointment</h3>
+  <form [formGroup]="createEventForm" class="create-event-form" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field class="full-width">
+        <input formControlName="title" matInput placeholder="Title">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input type="text" id="startDateTime" formControlName="start" matInput mwlFlatpickr [enableTime]="true"
+          dateFormat="Y-m-d H:i   " [time24hr]="true" timeFormat="H:i" altFormat="F j, Y H:i" [altInput]="true"
+          placeholder="Start" />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <input type="text" formControlName="end" matInput mwlFlatpickr [enableTime]="true" dateFormat="Y-m-d H:i"
+          [time24hr]="true" timeFormat="H:i" altFormat="F j, Y H:i" [altInput]="true" placeholder="End"
+          [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="createEventForm.hasError('invalidDate')">
+          End date must be after start date
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+          cdkAutosizeMaxRows="10" formControlName="notes" matInput placeholder="Notes"></textarea>
+      </mat-form-field>
+    </p>
+    <p>
+      <button type="submit" [disabled]="!createEventForm.valid" mat-raised-button color="primary">Create</button>
+    </p>
+  </form>
+</div>
