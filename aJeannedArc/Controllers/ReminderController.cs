@@ -83,6 +83,21 @@ namespace aJeannedArc.Controllers
             return reminder;
         }
 
+        // Delete: api/Reminder/delete/id
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteReminder(long id)
+        {
+            var appointment = _context.Reminders.First(a => a.Id == id);
+
+            if (appointment == null)
+                return NotFound();
+
+            _context.Reminders.Remove(appointment);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // Get for user : api/Reminder/ForUser/id
         [HttpGet("ForUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminderForUser(long userId)
