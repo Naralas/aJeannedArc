@@ -151,11 +151,11 @@ import { CreateReminderComponent } from './appointments/create-reminder/create-r
   ],
   providers: [
     NavService,
-    {
+    /*{
       provide: HTTP_INTERCEPTORS,
       useClass: FakeBackendInterceptor,
       multi: true
-    }
+    }*/
   ],
   bootstrap: [AppComponent]
 })

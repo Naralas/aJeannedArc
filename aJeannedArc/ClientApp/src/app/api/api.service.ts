@@ -35,12 +35,13 @@ export class ApiService {
   }
 
   register(email: string, username: string, password: string): void {
-    this.http.post<LoginResultModel>(this.apiUrl + 'api/register', {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/User/create', {
       email: email,
       username: username,
       password: password
     }).subscribe(r => {
-      if (r.userId) {
+      console.log(r);
+      if (r.id) {
         this.setUserID(r.userId);
         this.router.navigateByUrl('/events');
       } else {
@@ -67,11 +68,11 @@ export class ApiService {
     this.http.post<LoginResultModel>(this.apiUrl + 'api/appointments/create', {
       appointment: appointment,
     }).subscribe(r => {
-      if (r.userId) {
-        this.setUserID(r.userId);
+      if (r.id) {
+        this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error(r.error);
+        console.error("Not working");
       }
     });
   }
@@ -80,17 +81,19 @@ export class ApiService {
     this.http.post<LoginResultModel>(this.apiUrl + 'api/reminders/create', {
       reminder: reminder,
     }).subscribe(r => {
-      if (r.userId) {
-        this.setUserID(r.userId);
+      if (r.id) {
+        this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error(r.error);
+        console.error("Not working");
       }
     });
   }
 }
 
 export interface LoginResultModel {
-  userId: string;
-  error: string;
+  id: string;
+  username: string;
+  email:string;
+  //error: string;
 }
