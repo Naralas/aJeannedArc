@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   register(email: string, username: string, password: string): void{
-    this.http.post<LoginResultModel>(this.apiUrl + "api/register", {
+    this.http.post<LoginResultModel>(this.apiUrl + "api/user/register", {
       email: email,
       username: username,
       password: password

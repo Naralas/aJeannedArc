@@ -54,23 +54,27 @@ namespace aJeannedArc.Controllers
             return appointment;
         }
 
-        //// PUT: api/Appointment/5
-        //[HttpPost("{id}/update")]
-        //public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
-        //{
-        //    var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
+        // PUT: api/Appointment/5
+        [HttpPost("{id}/update")]
+        public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
+        {
+            var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
 
-        //    if (appointmentBdd == null)
-        //        return NoContent();
+            if (appointmentBdd == null)
+                return NoContent();
 
-        //    TryUpdateModelAsync<Appointment>(appointmentBdd, "", a => a.T)
+            appointmentBdd.Title = appointment.Title;
+            appointmentBdd.Description = appointment.Description;
+            appointmentBdd.StartTime = appointment.StartTime;
+            appointmentBdd.EndTime = appointment.EndTime;
 
+            appointmentContext.SaveChanges();
 
-        //    return appointment;
-        //}
+            return appointment;
+        }
 
         // POST: api/User
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
             appointmentContext.Appointments.Add(appointment);
