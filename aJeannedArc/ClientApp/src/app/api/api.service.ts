@@ -29,7 +29,7 @@ export class ApiService {
         this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        //console.error(r.error);
+        // console.error(r.error);
       }
     });
   }
@@ -45,7 +45,7 @@ export class ApiService {
         this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        //console.error(r.error);
+        // console.error(r.error);
       }
     });
   }
@@ -65,27 +65,69 @@ export class ApiService {
   }
 
   createAppointment(appointment: Appointment) {
-    this.http.post<LoginResultModel>(this.apiUrl + 'api/appointments/create', {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/events/appointments/create', {
       appointment: appointment,
     }).subscribe(r => {
       if (r.id) {
         this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error("Not working");
+        console.error('Not working');
       }
     });
   }
 
-  createReminder(reminder: Reminder) {
-    this.http.post<LoginResultModel>(this.apiUrl + 'api/reminders/create', {
+  editAppointment(appointment: Appointment) {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/events/appointments/' + appointment.id + '/edit', {
+      appointment: appointment,
+    }).subscribe(r => {
+      if (r.id) {
+        this.setUserID(r.id);
+        this.router.navigateByUrl('/events');
+      } else {
+        console.error('Not working');
+      }
+    });
+  }
+
+  getReminder(id: number): Reminder {
+    /*this.http.get<Reminder>(this.apiUrl + 'api/events/reminders/' + id, {
+    }).subscribe(r => {
+      if (r.id) {
+        return r;
+      } else {
+        console.error('Not working');
+      }
+    });
+    return null;*/
+    const reminder: Reminder = new Reminder();
+    reminder.dateTime = new Date();
+    reminder.title = "Salut";
+    return reminder;
+  }
+
+  editReminder(reminder: Reminder) {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/events/reminders/' + reminder.id + '/edit', {
       reminder: reminder,
     }).subscribe(r => {
       if (r.id) {
         this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error("Not working");
+        console.error('Not working');
+      }
+    });
+  }
+
+  createReminder(reminder: Reminder) {
+    this.http.post<LoginResultModel>(this.apiUrl + 'api/events/reminders/create', {
+      reminder: reminder,
+    }).subscribe(r => {
+      if (r.id) {
+        this.setUserID(r.id);
+        this.router.navigateByUrl('/events');
+      } else {
+        console.error('Not working');
       }
     });
   }
@@ -94,6 +136,6 @@ export class ApiService {
 export interface LoginResultModel {
   id: string;
   username: string;
-  email:string;
-  //error: string;
+  email: string;
+  // error: string;
 }
