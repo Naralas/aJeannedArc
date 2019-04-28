@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using aJeannedArc.Models;
+using System.Diagnostics;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,10 +50,11 @@ namespace aJeannedArc.Controllers
             return reminder;
         }
 
-        // POST: api/Reminder
-        [HttpPost("create")]
+        // POST: api/Reminder/Create
+        [HttpPost("Create")]
         public async Task<ActionResult<Reminder>> CreateReminder(Reminder reminder)
         {
+            Debug.WriteLine(reminder);
             _context.Reminders.Add(reminder);
             await _context.SaveChangesAsync();
 
