@@ -25,11 +25,11 @@ export class ApiService {
       username: username,
       password: password
     }).subscribe(r => {
-      if (r.userId) {
-        this.setUserID(r.userId);
+      if (r.id) {
+        this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error(r.error);
+        //console.error(r.error);
       }
     });
   }
@@ -42,10 +42,10 @@ export class ApiService {
     }).subscribe(r => {
       console.log(r);
       if (r.id) {
-        this.setUserID(r.userId);
+        this.setUserID(r.id);
         this.router.navigateByUrl('/events');
       } else {
-        console.error(r.error);
+        //console.error(r.error);
       }
     });
   }
