@@ -24,7 +24,17 @@ namespace aJeannedArc.Controllers
             {
                 // Create a new TodoItem if collection is empty,
                 // which means you can't delete all TodoItems.
-                _context.Users.Add(new User { Username = "User1" });
+                User a = new User
+                {
+                    Username = "User1",
+                    Appointments = new List<Appointment>
+                                    {
+                                        new Appointment{ Title = "a 1"},
+                                        new Appointment{ Title = "a 3"}
+                                    }
+                };
+                _context.Users.Add(a);
+
                 _context.SaveChanges();
             }
         }
@@ -34,6 +44,19 @@ namespace aJeannedArc.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
+        }
+
+
+        // GET: api/User
+        [HttpGet("calendar/{id}")]
+        public ActionResult<ICollection<Appointment>> GetCalendar(long id)
+        {
+            ICollection<Appointment> calendar = _context.Users.First(u => u.Id == id).Appointments;
+
+            if (calendar == null)
+                return NotFound();
+
+            return new JsonResult(calendar);
         }
 
         // GET: api/User/5

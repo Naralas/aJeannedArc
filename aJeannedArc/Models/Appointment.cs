@@ -14,6 +14,5 @@ namespace aJeannedArc.Models
         public DateTime End { get; set; }
         public bool IsPublic { get; set; }
         public bool HasPassed { get; set; }
-        public User Owner { get; set; }
     }
 }
