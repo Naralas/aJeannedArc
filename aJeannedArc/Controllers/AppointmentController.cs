@@ -100,6 +100,18 @@ namespace aJeannedArc.Controllers
             return NoContent();
         }
 
+        // Get for user : api/Appointment/ForUser/id
+        [HttpGet("ForUser/{userId}")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentForUser(long userId)
+        {
+            var appointments = appointmentContext.Appointments.Where(a => a.UserId == userId).ToList();
 
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+        
+            return appointments;
+        }
     }
 }
