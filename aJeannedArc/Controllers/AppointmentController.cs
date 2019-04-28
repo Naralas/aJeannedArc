@@ -26,6 +26,13 @@ namespace aJeannedArc.Controllers
             }
         }
 
+        // GET: api/Appointment
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
+        {
+            return await appointmentContext.Appointments.ToListAsync();
+        }
+
         // GET: api/Appointment/Public
         [HttpGet("Public")]
         public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
