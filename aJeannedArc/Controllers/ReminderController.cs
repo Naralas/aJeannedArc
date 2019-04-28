@@ -62,9 +62,9 @@ namespace aJeannedArc.Controllers
 
         // PUT: api/Reminder/update/5
         [HttpPost("update/{id}")]
-        public ActionResult<Reminder> Put(int id, [FromBody]Reminder reminder)
+        public ActionResult<Reminder> Put(long id, [FromBody]Reminder reminder)
         {
-            var reminderBdd = _context.Reminders.First(app => app.Id == id);
+            var reminderBdd = _context.Reminders.Find(id);
 
             if (reminderBdd == null)
                 return NoContent();
@@ -73,6 +73,9 @@ namespace aJeannedArc.Controllers
             reminderBdd.Date = reminder.Date;
             reminderBdd.UserId = reminder.UserId;
             reminderBdd.IsFinished = reminder.IsFinished;
+
+            reminder.Id = reminderBdd.Id;
+            // TODO pour les autres aussi ou check
 
             _context.SaveChanges();
 
