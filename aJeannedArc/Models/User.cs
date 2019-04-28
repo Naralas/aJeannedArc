@@ -12,5 +12,6 @@ namespace aJeannedArc.Models
         public String Email { get; set; }
         public String Password { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
+        public byte[] Salt { get; set; }
     }
 }
