@@ -10,6 +10,9 @@ using System.Diagnostics;
 
 namespace aJeannedArc.Controllers
 {
+    /**
+     * Controller class for the Appointment model
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class ReminderController : Controller
@@ -29,6 +32,10 @@ namespace aJeannedArc.Controllers
             }
         }
 
+        /**
+         * Get all the reminder
+         * @return : all the reminder from he database
+         */
         // GET: api/Reminder
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminders()
@@ -47,6 +54,11 @@ namespace aJeannedArc.Controllers
             return reminders;
         }
 
+        /**
+         * Get a reminder for a specific id
+         * @param : Id, the id of the remidner we want to have
+         * @return : the reminder we just created
+         */
         // GET: api/Reminder/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reminder>> GetReminder(long id)
@@ -61,6 +73,11 @@ namespace aJeannedArc.Controllers
             return reminder;
         }
 
+        /**
+         * Create and save a new reminder in the db
+         * @param : the reminder created with the JSON data from the post request
+         * @return : the reminder we just created
+         */
         // POST: api/Reminder/Create
         [HttpPost("Create")]
         public async Task<ActionResult<Reminder>> CreateReminder(Reminder reminder)
@@ -70,6 +87,11 @@ namespace aJeannedArc.Controllers
             return CreatedAtAction(nameof(GetReminder), new { id = reminder.Id }, reminder);
         }
 
+        /**
+         * Update a reminder in the db
+         * @param : id, the id of the reminder we want to update. reminder, the new object we want our reminder to be like (the data to change)
+         * @return : the updated reminder
+         */
         // PUT: api/Reminder/update/5
         [HttpPost("update/{id}")]
         public ActionResult<Reminder> Put(long id, [FromBody]Reminder reminder)
@@ -93,6 +115,11 @@ namespace aJeannedArc.Controllers
             return reminder;
         }
 
+        /**
+         * delete a reminder for a given id
+         * @param : id, the id of the reminder we want to delete
+         * @return : JSON containing an error message or nothing
+         */
         // Delete: api/Reminder/delete/id
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteReminder(long id)
@@ -108,6 +135,11 @@ namespace aJeannedArc.Controllers
             return NoContent();
         }
 
+        /**
+         * Get all the reminders for a gicven user
+         * @param : id, the id of the user we want to get all the reminder of
+         * @return : the remidners of a specific user
+         */
         // Get for user : api/Reminder/ForUser/id
         [HttpGet("ForUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminderForUser(long userId)

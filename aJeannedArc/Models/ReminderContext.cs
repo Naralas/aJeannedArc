@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aJeannedArc.Models
 {
+    /**
+     * Context class for the Reminder Model
+     */
     public class ReminderContext : DbContext
     {
         public ReminderContext(DbContextOptions<ReminderContext> options)

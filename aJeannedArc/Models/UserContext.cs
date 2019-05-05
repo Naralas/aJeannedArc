@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aJeannedArc.Models
 {
+    /**
+     * Context class for the User Model
+     */
     public class UserContext : DbContext
     {
         public UserContext(DbContextOptions<UserContext> options)

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aJeannedArc.Models
 {
+    /**
+     * Context class for the Appointment Model
+     */
     public class AppointmentContext : DbContext
     {
         public AppointmentContext(DbContextOptions<AppointmentContext> options)

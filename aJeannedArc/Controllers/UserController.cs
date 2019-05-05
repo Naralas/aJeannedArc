@@ -10,6 +10,10 @@ using System.Security.Cryptography;
 
 namespace aJeannedArc.Controllers
 {
+    /**
+     * Class controller for the model User.
+     * Implements logique related to the users
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -43,6 +47,10 @@ namespace aJeannedArc.Controllers
             }
         }
 
+        /**
+         * Get all the users
+         * @return : all users 
+         */
         // GET: api/User
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -50,6 +58,11 @@ namespace aJeannedArc.Controllers
             return await _context.Users.ToListAsync();
         }
 
+        /**
+         * Get a user for a specific id
+         * @param : id, the id of the user we want to have
+         * @return : the user for the given id
+         */
         // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
@@ -76,6 +89,11 @@ namespace aJeannedArc.Controllers
         //    return new JsonResult(subscribeRequest);
         //}
 
+        /**
+         * Create and save a new user in the db
+         * @param : the user created with the JSON data from the post request
+         * @return : the user we just created
+         */
         // POST: api/User/Create
         [HttpPost("Create")]
         public async Task<ActionResult<User>> CreateUser(User user)
@@ -102,6 +120,11 @@ namespace aJeannedArc.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
+        /**
+         * Login the user (check if name exist and compare pw)
+         * @param : the user we need to check 
+         * @return : JSON data containing the id of the user if logged or error message
+         */
         // POST: api/User/Login
         [HttpPost("Login")]
         public async Task<ActionResult<User>> Login(User user)

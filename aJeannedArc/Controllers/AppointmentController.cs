@@ -7,6 +7,9 @@ using aJeannedArc.Models;
 
 namespace aJeannedArc.Controllers
 {
+    /**
+     * Controller class for the Appointment model
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentController : ControllerBase
@@ -26,6 +29,10 @@ namespace aJeannedArc.Controllers
             }
         }
 
+        /**
+         * Get all the appointments
+         * @return : all the appointments from he database
+         */
         // GET: api/Appointment
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
@@ -45,6 +52,10 @@ namespace aJeannedArc.Controllers
             return appointments;
         }
 
+        /**
+         * Get public appointments
+         * @return : all the public appointment
+         */
         // GET: api/Appointment/Public
         [HttpGet("Public")]
         public ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
@@ -70,6 +81,11 @@ namespace aJeannedArc.Controllers
             return appointment;
         }
 
+        /**
+         * Get a appointments for a specific id
+         * @param : Id, the id of the appointments we want to have
+         * @return : the appointments we just created
+         */
         // GET: api/Appointment/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(long id)
@@ -84,6 +100,11 @@ namespace aJeannedArc.Controllers
             return appointment;
         }
 
+        /**
+         * Update a appointments in the db
+         * @param : id, the id of the appointments we want to update. appointments, the new object we want our appointments to be like (the data to change)
+         * @return : the updated appointments
+         */
         // PUT: api/Appointment/5
         [HttpPost("update/{id}")]
         public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
@@ -110,6 +131,11 @@ namespace aJeannedArc.Controllers
             return appointment;
         }
 
+        /**
+         * Create and save a new appointments in the db
+         * @param : the appointments created with the JSON data from the post request
+         * @return : the appointments we just created
+         */
         [HttpPost("create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
@@ -125,6 +151,11 @@ namespace aJeannedArc.Controllers
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
         }
 
+        /**
+         * delete a appointments for a given id
+         * @param : id, the id of the appointments we want to delete
+         * @return : JSON containing an error message or nothing
+         */
         // Delete: api/Appointment/delete/id
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAppointment(long id)
@@ -140,6 +171,11 @@ namespace aJeannedArc.Controllers
             return NoContent();
         }
 
+        /**
+         * Get all the appointments for a gicven user
+         * @param : id, the id of the user we want to get all the appointments of
+         * @return : the appointments of a specific user
+         */
         // Get for user : api/Appointment/ForUser/id
         [HttpGet("ForUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentForUser(long userId)
