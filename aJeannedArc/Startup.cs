@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using aJeannedArc.Models;
+using aJeannedArc.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace aJeannedArc
 {
@@ -22,10 +24,15 @@ namespace aJeannedArc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
-            services.AddDbContext<AppointmentContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
-            services.AddDbContext<ReminderContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
+            //services.AddDbContext<UserContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
+            //services.AddDbContext<AppointmentContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
+            //services.AddDbContext<ReminderContext>(opt => opt.UseInMemoryDatabase("aJeannedArc"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=aJeannedArc;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<AppointmentContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ReminderContext>(options => options.UseSqlServer(connection));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
