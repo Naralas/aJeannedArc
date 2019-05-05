@@ -47,7 +47,7 @@ namespace aJeannedArc.Controllers
 
         // GET: api/Appointment/Public
         [HttpGet("Public")]
-        public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
+        public ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
         {
             var appointment = appointmentContext.Appointments.Where(a => a.IsPublic).ToList();
 
@@ -55,6 +55,17 @@ namespace aJeannedArc.Controllers
             {
                 return NotFound();
             }
+
+            for (int i = appointment.Count - 1; i >= 0; i--)
+            {
+                if (appointment.ElementAt(i).End < System.DateTime.Now)
+                {
+                    appointmentContext.Remove(appointment.ElementAt(i));
+                    appointment.RemoveAt(i);
+                }
+            }
+            appointmentContext.SaveChanges();
+
 
             return appointment;
         }
@@ -102,6 +113,12 @@ namespace aJeannedArc.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
+            //Check if the dates are correct
+            if (appointment.Start > appointment.End ||
+                appointment.End < System.DateTime.Now ||
+                appointment.Title == "")
+                return NotFound();
+
             appointmentContext.Appointments.Add(appointment);
             await appointmentContext.SaveChangesAsync();
 
@@ -133,7 +150,17 @@ namespace aJeannedArc.Controllers
             {
                 return NotFound();
             }
-        
+
+            for (int i = appointments.Count - 1; i >= 0; i--)
+            {
+                if (appointments.ElementAt(i).End < System.DateTime.Now)
+                {
+                    appointmentContext.Remove(appointments.ElementAt(i));
+                    appointments.RemoveAt(i);
+                }
+            }
+            appointmentContext.SaveChanges();
+
             return appointments;
         }
     }

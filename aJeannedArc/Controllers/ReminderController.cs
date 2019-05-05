@@ -33,7 +33,18 @@ namespace aJeannedArc.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminders()
         {
-            return await _context.Reminders.ToListAsync();
+            List<Reminder> reminders = await _context.Reminders.ToListAsync();
+            for (int i = reminders.Count - 1; i >= 0; i--)
+            {
+                if (reminders.ElementAt(i).Date < System.DateTime.Now)
+                {
+                    _context.Remove(reminders.ElementAt(i));
+                    reminders.RemoveAt(i);
+                }
+            }
+            _context.SaveChanges();
+
+            return reminders;
         }
 
         // GET: api/Reminder/5
@@ -54,7 +65,6 @@ namespace aJeannedArc.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<Reminder>> CreateReminder(Reminder reminder)
         {
-            Debug.WriteLine(reminder);
             _context.Reminders.Add(reminder);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetReminder), new { id = reminder.Id }, reminder);
@@ -64,6 +74,10 @@ namespace aJeannedArc.Controllers
         [HttpPost("update/{id}")]
         public ActionResult<Reminder> Put(long id, [FromBody]Reminder reminder)
         {
+            if (reminder.Date < System.DateTime.Now ||
+                reminder.Title == "")
+                return NotFound();
+
             var reminderBdd = _context.Reminders.Find(id);
 
             if (reminderBdd == null)
@@ -73,10 +87,6 @@ namespace aJeannedArc.Controllers
             reminderBdd.Date = reminder.Date;
             reminderBdd.UserId = reminder.UserId;
             reminderBdd.IsFinished = reminder.IsFinished;
-            reminder.Id = reminderBdd.Id;
-
-            reminder.Id = reminderBdd.Id;
-            // TODO pour les autres aussi ou check
 
             _context.SaveChanges();
 
