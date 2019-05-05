@@ -30,12 +30,24 @@ namespace aJeannedArc.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            return await appointmentContext.Appointments.ToListAsync();
+            List<Appointment> appointments = await appointmentContext.Appointments.ToListAsync();
+            for(int i = appointments.Count-1; i >= 0; i--)
+            {
+                if(appointments.ElementAt(i).End < System.DateTime.Now)
+                {
+                    appointmentContext.Remove(appointments.ElementAt(i));
+                    appointments.RemoveAt(i);
+                }
+            }
+
+            appointmentContext.SaveChanges();
+
+            return appointments;
         }
 
         // GET: api/Appointment/Public
         [HttpGet("Public")]
-        public  ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
+        public ActionResult<IEnumerable<Appointment>> GetPublicAppointment()
         {
             var appointment = appointmentContext.Appointments.Where(a => a.IsPublic).ToList();
 
@@ -43,6 +55,17 @@ namespace aJeannedArc.Controllers
             {
                 return NotFound();
             }
+
+            for (int i = appointment.Count - 1; i >= 0; i--)
+            {
+                if (appointment.ElementAt(i).End < System.DateTime.Now)
+                {
+                    appointmentContext.Remove(appointment.ElementAt(i));
+                    appointment.RemoveAt(i);
+                }
+            }
+            appointmentContext.SaveChanges();
+
 
             return appointment;
         }
@@ -65,16 +88,21 @@ namespace aJeannedArc.Controllers
         [HttpPost("update/{id}")]
         public ActionResult<Appointment> Put(int id, [FromBody]Appointment appointment)
         {
-            var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
+            //Check if the dates are correct
+            if (appointment.Start > appointment.End ||
+                appointment.End < System.DateTime.Now ||
+                appointment.Title == "")
+                return NotFound();
 
+            var appointmentBdd = appointmentContext.Appointments.First(app => app.Id == id);
+      
             if (appointmentBdd == null)
                 return NoContent();
-            
+
             appointmentBdd.IsPublic = appointment.IsPublic;
-            appointmentBdd.UserId = appointment.UserId;
             appointmentBdd.Title = appointment.Title;
             appointmentBdd.Notes = appointment.Notes;
-            appointmentBdd.Start= appointment.Start;
+            appointmentBdd.Start = appointment.Start;
             appointmentBdd.End = appointment.End;
 
             appointmentContext.SaveChanges();
@@ -85,6 +113,12 @@ namespace aJeannedArc.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
         {
+            //Check if the dates are correct
+            if (appointment.Start > appointment.End ||
+                appointment.End < System.DateTime.Now ||
+                appointment.Title == "")
+                return NotFound();
+
             appointmentContext.Appointments.Add(appointment);
             await appointmentContext.SaveChangesAsync();
 
@@ -116,7 +150,17 @@ namespace aJeannedArc.Controllers
             {
                 return NotFound();
             }
-        
+
+            for (int i = appointments.Count - 1; i >= 0; i--)
+            {
+                if (appointments.ElementAt(i).End < System.DateTime.Now)
+                {
+                    appointmentContext.Remove(appointments.ElementAt(i));
+                    appointments.RemoveAt(i);
+                }
+            }
+            appointmentContext.SaveChanges();
+
             return appointments;
         }
     }

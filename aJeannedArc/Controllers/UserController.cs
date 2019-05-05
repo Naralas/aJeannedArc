@@ -15,10 +15,19 @@ namespace aJeannedArc.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
+        private readonly AppointmentContext appointmentContext;
 
-        public UserController(UserContext context)
+
+        //public class SubscribeRequest
+        //{
+        //    public int userId { get; set; }
+        //    public int eventId{ get; set; }
+        //}
+
+        public UserController(UserContext context, AppointmentContext appointmentContext)
         {
             _context = context;
+            this.appointmentContext = appointmentContext;
 
             if (_context.Users.Count() == 0)
             {
@@ -41,20 +50,6 @@ namespace aJeannedArc.Controllers
             return await _context.Users.ToListAsync();
         }
 
-
-        /*
-        // GET: api/User
-        [HttpGet("calendar/{id}")]
-        public ActionResult<ICollection<Appointment>> GetCalendar(long id)
-        {
-            ICollection<Appointment> calendar = _context.Users.First(u => u.Id == id).Appointments;
-
-            if (calendar == null)
-                return NotFound();
-
-            return new JsonResult(calendar);
-        }*/
-
         // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
@@ -68,6 +63,18 @@ namespace aJeannedArc.Controllers
 
             return user;
         }
+
+        //[HttpPost("Subscribe")]
+        //public ActionResult Subscribe([FromBody]SubscribeRequest subscribeRequest)
+        //{
+        //    User u = _context.Users.Where(user => user.Id == subscribeRequest.userId).First();
+        //    Appointment app = appointmentContext.Appointments.Where(appointment => appointment.Id == subscribeRequest.eventId).First();
+
+        //    if (u == null || app == null || !app.IsPublic )
+        //        return NotFound();
+
+        //    return new JsonResult(subscribeRequest);
+        //}
 
         // POST: api/User/Create
         [HttpPost("Create")]
