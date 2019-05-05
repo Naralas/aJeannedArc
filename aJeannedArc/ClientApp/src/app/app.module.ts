@@ -9,8 +9,6 @@ import { MenuListItemComponent } from './menu-list-item/menu-list-item.component
 import { TopNavComponent } from './top-nav/top-nav.component';
 
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -83,8 +81,6 @@ import { EditReminderComponent } from './appointments/edit-reminder/edit-reminde
     TopNavComponent,
     MenuListItemComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     CreateAppointmentComponent,
     ListAppointmentsComponent,
     LoginComponent,
